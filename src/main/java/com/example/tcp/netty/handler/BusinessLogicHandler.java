@@ -70,15 +70,21 @@ public class BusinessLogicHandler extends SimpleChannelInboundHandler<Packet> {
         // 실제 데이터 수신 로직 (Async 처리가 필요하면 여기서 CompletableFuture 등 사용)
         switch (msg.getType()) {
             case PING:
-                ctx.writeAndFlush(Packet.newBuilder().setType(PacketType.PONG).build());
+                log.debug("Received PING");
+                Packet pongPacket = Packet.newBuilder()
+                        .setType(PacketType.PONG)
+                        .setTimestamp(System.currentTimeMillis())
+                        .build();                
+                ctx.writeAndFlush(pongPacket);
                 break;
             case DATA:
                 log.info("Data received: {}", msg.getPayload());
                 // Echo Logic
-                ctx.writeAndFlush(Packet.newBuilder()
+                Packet echoPacket = Packet.newBuilder()
                         .setType(PacketType.DATA)
                         .setPayload("ECHO: " + msg.getPayload())
-                        .build());
+                        .build();
+                ctx.writeAndFlush(echoPacket);
                 break;
             default:
                 log.debug("Ignored message type: {}", msg.getType());
