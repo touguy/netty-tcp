@@ -1,0 +1,23 @@
+# application.yml
+
+# 서버 공통 설정 (선택 사항)
+server:
+  port: 8080 # Spring Boot Web 애플리케이션의 HTTP 포트 (Netty 포트와 별개)
+
+# Netty TCP 서버 설정 (NettyProperties.java와 연결됨)
+netty:
+  server:
+    # 포트 설정
+    port: 8888 # NettyProperties의 기본값과 동일합니다. 필요에 따라 변경 가능
+    
+    # 세션 관리 설정
+    max-sessions: 5           # 최대 접속 허용 수 (5)
+    reject-new-if-full: true  # true: 신규거부, false: 기존해제 (Kick Old)
+    
+    # Timeout 설정 (초 단위)
+    reader-idle-time: 30      # 읽기 유휴 시간 (KeepAlive 체크용)
+    writer-idle-time: 0
+    all-idle-time: 0
+    
+    # KeepAlive Polling 메시지
+    keep-alive-message: "PING\n"
