@@ -20,4 +20,8 @@ netty:
     all-idle-time: 0
     
     # KeepAlive Polling 메시지
-    keep-alive-message: "PING\n"
+    # keep-alive-message: "PING\n"
+
+    # 스레드 설정 : proto 추가
+    boss-thread: 1
+    worker-thread: 4    

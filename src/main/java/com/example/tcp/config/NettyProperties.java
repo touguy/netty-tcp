@@ -20,5 +20,11 @@ public class NettyProperties {
     private int allIdleTime = 0;
     
     // KeepAlive Polling 메시지
-    private String keepAliveMessage = "PING\n";
+    // private String keepAliveMessage = "PING\n";
+
+    // Netty EventLoopGroup 스레드 수 설정 : proto 추가
+    private int bossThread;
+    private int workerThread;
+
+    // KeepAlive용 메시지는 이제 Protobuf 객체로 생성하므로 String 설정은 제거하거나 참조용으로만 사용
 }

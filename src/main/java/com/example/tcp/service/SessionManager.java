@@ -84,4 +84,9 @@ public class SessionManager {
     public int getCurrentSessionCount() {
         return allChannels.size();
     }
+
+    // 전체 브로드캐스팅 예시
+    public void broadcast(Object msg) {
+        allChannels.writeAndFlush(msg);
+    }    
 }
