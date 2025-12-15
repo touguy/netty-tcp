@@ -29,6 +29,8 @@ public class NettyTcpServer {
     @PostConstruct
     public void start() {
         new Thread(() -> {
+            // Boss 쓰레드: 연결 수락 담당 (1개면 충분)
+            // Worker 쓰레드: 데이터 I/O 담당 (기본값: CPU 코어 * 2)
             bossGroup = new NioEventLoopGroup(properties.getBossThread());
             workerGroup = new NioEventLoopGroup(properties.getWorkerThread());
 
@@ -36,9 +38,9 @@ public class NettyTcpServer {
                 ServerBootstrap b = new ServerBootstrap();
                 b.group(bossGroup, workerGroup)
                  .channel(NioServerSocketChannel.class)
-                 .childHandler(channelInitializer)
-                 .option(ChannelOption.SO_BACKLOG, 128)
-                 .childOption(ChannelOption.SO_KEEPALIVE, true);
+                 .childHandler(channelInitializer)  // Keep-alive 유지
+                 .option(ChannelOption.SO_BACKLOG, 128)  // 대기열 크기
+                 .childOption(ChannelOption.SO_KEEPALIVE, true);  // Keep-alive 유지
 
                 int port = properties.getPort();
                 serverChannelFuture = b.bind(port).sync();

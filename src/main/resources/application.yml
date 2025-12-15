@@ -22,6 +22,8 @@ netty:
     # KeepAlive Polling 메시지
     # keep-alive-message: "PING\n"
 
-    # 스레드 설정 : proto 추가
+    # 스레드 설정 : proto 추가 
+    ## Boss 쓰레드: 연결 수락 담당 (1개면 충분)
+    ## Worker 쓰레드: 데이터 I/O 담당 (기본값: CPU 코어 * 2)
     boss-thread: 1
     worker-thread: 4    
