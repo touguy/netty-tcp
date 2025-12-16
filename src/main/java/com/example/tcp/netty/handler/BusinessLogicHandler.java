@@ -65,7 +65,16 @@ public class BusinessLogicHandler extends SimpleChannelInboundHandler<String> {
             ctx.writeAndFlush("PONG\n");
         } else {
             // 일반 메시지 처리 (Echo)
-            ctx.writeAndFlush("ECHO: " + msg + "\n");
+            try {
+                // 여기에 비즈니스 로직 추가 (DB 조회, 외부 API 호출 등)
+                // 예: String response = businessService.processMessage(msg);
+                
+                // 간단한 Echo 응답 (한글 포함)
+                ctx.writeAndFlush("ECHO: " + msg + "\n");
+            } catch (Exception e) {
+                log.error("Error processing message", e);
+                ctx.writeAndFlush("ERR: Internal Server Error\n");
+            }
         }
     }
 
