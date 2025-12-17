@@ -24,7 +24,8 @@ public class RawLoggingHandler extends ChannelInboundHandlerAdapter {
             }
 
             // Try to decode as UTF-8 (may produce replacement chars)
-            String asUtf8 = new String(arr, java.nio.charset.StandardCharsets.UTF_8);
+            // String asUtf8 = new String(arr, java.nio.charset.StandardCharsets.UTF_8);
+            String asUtf8 = new String(arr, CharsetUtil.UTF_8);
 
             log.info("Raw bytes from {}: len={} hex=[{}] utf8=[{}]", ctx.channel().remoteAddress(), len,
                     hex.toString().trim(), asUtf8);
