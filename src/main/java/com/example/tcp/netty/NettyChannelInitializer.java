@@ -31,6 +31,9 @@ public class NettyChannelInitializer extends ChannelInitializer<SocketChannel> {
                         properties.getAllIdleTime(),
                         TimeUnit.SECONDS))
 
+                // Raw logging for incoming bytes to help debug encoding/frame issues
+                .addLast(new com.example.tcp.netty.handler.RawLoggingHandler())
+
                 // 2. Codec: 문자열 기반 (실무에서는 ByteArrayDecoder 등을 사용)
                 .addLast(new StringDecoder(CharsetUtil.UTF_8))
                 .addLast(new StringEncoder(CharsetUtil.UTF_8))
